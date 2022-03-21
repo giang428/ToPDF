@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">ToPDF</string>
+    <string name="createpdf">Create PDF</string>
+    <string name="camera">Take pictures</string>
+    <string name="file">From file…</string>
+</resources>
