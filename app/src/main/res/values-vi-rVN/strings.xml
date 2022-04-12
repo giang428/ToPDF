@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about">Giới thiệu</string>
+    <string name="setting">Cài đặt</string>
+    <string name="setting_language">Ngôn ngữ</string>
+    <string name="camera">Chụp ảnh</string>
+    <string name="file">Chọn file…</string>
+    <string name="convert_button">Chuyển đổi sang file PDF</string>
+    <string name="create_button">Tạo file PDF mới</string>
+    <string name="permission_denied_text">Quyền bị từ chối</string>
+    <string name="cancel_text">Huỷ</string>
+    <string name="ask_again_text">Hỏi lại</string>
+    <string name="one_more_thing_text">Còn một điều nữa!</string>
+    <string name="storage_manager_permission_rationale">Từ Android 11, bạn cần cấp quyền truy cập đặc biệt cho bộ nhớ</string>
+    <string name="close_app_text">Đóng App</string>
+    <string name="allow_text">Đồng ý</string>
+    <string name="title_activity_settings">Cài đặt</string>
+</resources>

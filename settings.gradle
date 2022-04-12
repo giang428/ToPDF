@@ -6,11 +6,17 @@ pluginManagement {
     }
 }
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
         google()
         mavenCentral()
+        maven {url "https://jitpack.io"}
+        maven { url 'https://artifactory.mxtracks.info/artifactory/gradle-dev-local/' }
+        maven {
+            url "https://pdftron-maven.s3.amazonaws.com/release"
+        }
     }
 }
 rootProject.name = "ToPDF"
 include ':app'
+

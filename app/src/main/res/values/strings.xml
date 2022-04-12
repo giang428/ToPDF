@@ -1,6 +1,30 @@
 <resources>
-    <string name="app_name">ToPDF</string>
-    <string name="createpdf">Create PDF</string>
+    //App name
+    <string name="app_name" translatable="false">ToPDF</string>
+    //button
+    <string name="create_button">Create PDF</string>
+    <string name="convert_button">Convert to PDF</string>
+
     <string name="camera">Take pictures</string>
     <string name="file">From file…</string>
+    <string name="about">About</string>
+    //setting
+    <string name="setting">Setting</string>
+
+    <string name="setting_language">Languages</string>
+    <string-array name="setting_language_arr">
+        <item>English</item>
+        <item>Tiếng Việt</item>
+    </string-array>
+        <string name="permission_denied_text">Permission Denied</string>
+        <string name="storage_need_rationale_description" translatable="false">Storage permission is needed for proper functioning of app.</string>
+        <string name="storage_need_rationale_for_not_ask_again_flag" translatable="false">You have chosen to never ask the permission again, but storage permission is needed for proper functioning of app.</string>
+        <string name="enable_from_settings_text" translatable="false">Enable from settings</string>
+        <string name="cancel_text">Cancel</string>
+        <string name="ask_again_text">Ask Again</string>
+        <string name="one_more_thing_text">One more thing!</string>
+        <string name="storage_manager_permission_rationale">In Android 11, you need to allow a special storage permission</string>
+        <string name="close_app_text">Close App</string>
+        <string name="allow_text">Allow</string>
+    <string name="title_activity_settings">Setting</string>
 </resources>
