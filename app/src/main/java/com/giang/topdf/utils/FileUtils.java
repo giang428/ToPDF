@@ -1,109 +1,121 @@
 package com.giang.topdf.utils;
 
-import android.content.ContentUris;
+import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
+import androidx.core.content.FileProvider;
+
+import com.giang.topdf.BuildConfig;
+
 import java.io.File;
 
 public class FileUtils {
+    private final Activity mContext;
+    private final SharedPreferences mSharedPreferences;
 
-
-    private static Uri contentUri = null;
+    public FileUtils(Activity mContext, SharedPreferences mSharedPreferences) {
+        this.mContext = mContext;
+        this.mSharedPreferences = mSharedPreferences;
+    }
 
     public static String getPath(final Context context, final Uri uri) {
-
-        if (DocumentsContract.isDocumentUri(context, uri)) {
-            if (isExternalStorageDocument(uri)) {
-                final String docId = DocumentsContract.getDocumentId(uri);
-                final String[] split = docId.split(":");
-                final String type = split[0];
-                if ("primary".equalsIgnoreCase(type)) {
-                    if (split.length > 1) {
-                        return Environment.getExternalStorageDirectory() + "/" + split[1];
-                    } else {
-                        return Environment.getExternalStorageDirectory() + "/";
-                    }
-                } else {
-                    return "storage" + "/" + docId.replace(":", "/");
-                }
-
-            }
-            else if (isDownloadsDocument(uri)) {
-                String fileName = getFilePath(context, uri);
-                if (fileName != null) {
-                    return Environment.getExternalStorageDirectory().toString() + "/Download/" + fileName;
-                }
-
-                final String id = DocumentsContract.getDocumentId(uri);
-                final Uri contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), Long.parseLong(id));
-                return getDataColumn(context, contentUri, null, null);
-            }
-            // MediaProvider
-            else if (isMediaDocument(uri)) {
-                final String docId = DocumentsContract.getDocumentId(uri);
-                final String[] split = docId.split(":");
-                final String type = split[0];
-
-                Uri contentUri = null;
-                if ("image".equals(type)) {
-                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                } else if ("video".equals(type)) {
-                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-                } else if ("audio".equals(type)) {
-                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-                }
-
-                final String selection = "_id=?";
-                final String[] selectionArgs = new String[]{
-                        split[1]
-                };
-
-                return getDataColumn(context, contentUri, selection, selectionArgs);
-            }
+        if (uri == null) return null;
+        ContentResolver mContentResolver = context.getContentResolver();
+        if (uri.getScheme().equals("content")) {
+            return getRealPath(mContentResolver, uri, null);
         }
-        // MediaStore (and general)
-        else if ("content".equalsIgnoreCase(uri.getScheme())) {
-
-            // Return the remote address
-            if (isGooglePhotosUri(uri))
-                return uri.getLastPathSegment();
-
-            return getDataColumn(context, uri, null, null);
-        }
-        // File
-        else if ("file".equalsIgnoreCase(uri.getScheme())) {
+        if (uri.getScheme().equals("file")) {
             return uri.getPath();
         }
-
-        return null;
-    }
-
-    public static String getFilePath(Context context, Uri uri) {
-
-        Cursor cursor = null;
-        final String[] projection = {
-                MediaStore.MediaColumns.DISPLAY_NAME
-        };
-
-        try {
-            cursor = context.getContentResolver().query(uri, projection, null, null,
-                    null);
-            if (cursor != null && cursor.moveToFirst()) {
-                final int index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DISPLAY_NAME);
-                return cursor.getString(index);
-            }
-        } finally {
-            if (cursor != null)
-                cursor.close();
+        if (DocumentsContract.isDocumentUri(context,uri)){
+            return getPathForDocumentUri(mContentResolver,uri);
         }
         return null;
     }
+
+    private static String getPathForDocumentUri(ContentResolver mContentResolver, Uri uri) {
+        String mAuthority = uri.getAuthority();
+        switch (mAuthority){
+            case "com.android.providers.media.documents":
+                return getPathForMediaDoc(mContentResolver,uri);
+            case "com.android.providers.downloads.documents":
+                return getPathForDownloadsDoc(mContentResolver,uri);
+            case "com.android.externalstorage.documents":
+                return getPathForExternalStorageDoc(uri);
+        }
+        return null;
+    }
+
+    private static String getPathForExternalStorageDoc(Uri uri) {
+        String documentId = DocumentsContract.getDocumentId(uri);
+        String[] idArr = documentId.split(":");
+        if (idArr.length == 2) {
+            String type = idArr[0];
+            String realDocId = idArr[1];
+            if ("primary".equalsIgnoreCase(type)) {
+                return Environment.getExternalStorageDirectory() + "/" + realDocId;
+            }
+        }
+        return null;
+    }
+
+    private static String getPathForDownloadsDoc(ContentResolver mContentResolver, Uri uri) {
+        String documentId = DocumentsContract.getDocumentId(uri);
+        Uri downloadUri = Uri.parse("content://com.android.providers.downloads.documents/" + documentId.replace(":","%3A"));
+       // Uri downloadUriAppendId = ContentUris.withAppendedId(downloadUri, Long.parseLong(documentId));
+        return getRealPath(mContentResolver, downloadUri, null);
+    }
+
+    private static String getPathForMediaDoc(ContentResolver mContentResolver, Uri uri) {
+        String documentId = DocumentsContract.getDocumentId(uri);
+        String[] idArr = documentId.split(":");
+        if (idArr.length == 2) {
+            String docType = idArr[0];
+            String realDocId = idArr[1];
+            Uri mediaContentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+            switch (docType) {
+                case "image":
+                    mediaContentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                    break;
+                case "video":
+                    mediaContentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                    break;
+                case "audio":
+                    mediaContentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                    break;
+            }
+            String whereClause = MediaStore.Images.Media._ID + " = " + realDocId;
+            return getRealPath(mContentResolver, mediaContentUri, whereClause);
+        }
+        return null;
+    }
+
+
+    private static String getRealPath(ContentResolver contentResolver, Uri uri, String whereClause) {
+        String ret = "";
+        Cursor cursor = contentResolver.query(uri, null, whereClause, null, null);
+        if (cursor != null) {
+            boolean moveToFirst = cursor.moveToFirst();
+            if (moveToFirst) {
+                String columnName = MediaStore.Images.Media.DATA;
+                int imageColumnIndex = cursor.getColumnIndex(columnName);
+                if (imageColumnIndex == -1)
+                    return ret;
+                ret = cursor.getString(imageColumnIndex);
+                cursor.close();
+            }
+        }
+        return ret;
+    }
+
 
     private static String getPathFromExtSD(String[] pathData) {
         final String type = pathData[0];
@@ -133,79 +145,58 @@ public class FileUtils {
         int index = path.lastIndexOf("/");
         return index < path.length() ? path.substring(index + 1) : null;
     }
+    public static String getFileNameWithoutExtension(String path) {
+        if (path == null)
+            return null;
+        else {
+            String fileName = getFileName(path);
+            return fileName.lastIndexOf('.') < fileName.length() ? fileName.substring(0, fileName.lastIndexOf('.')) : null;
+        }
+    }
+    public static String getFileExtension(String path) {
+        if (path == null)
+            return null;
+        else {
+            String fileName = getFileName(path);
+            return fileName.lastIndexOf('.') < fileName.length() ? fileName.substring(fileName.lastIndexOf('.')) : null;
+        }
+    }
     public static String getFilePath(String path) {
         if (path == null)
             return null;
         int index = path.lastIndexOf("/");
-        return index < path.length() ? path.substring(0,index + 1) : null;
+        return index < path.length() ? path.substring(0, index + 1) : null;
     }
-    /**
-     * Check if a file exists on device
-     *
-     * @param filePath The absolute file path
-     */
 
-    private static boolean fileExists(String filePath) {
+    public static boolean fileExists(String filePath) {
         File file = new File(filePath);
         return file.exists();
     }
-
-    private static boolean isExternalStorageDocument(Uri uri) {
-        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    public static void viewFile(Context mContext,String outputfile){
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.putExtra(Intent.EXTRA_TEXT, FileUtils.getFileName(outputfile));
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        Uri fileUri;
+            fileUri = FileProvider.getUriForFile(
+                    mContext
+                    ,BuildConfig.APPLICATION_ID + ".provider"
+                    ,new File(outputfile));
+        intent.setDataAndType(fileUri,"application/pdf");
+        mContext.startActivity(Intent.createChooser(intent,"Share file"));
     }
-
-    /**
-     * @param uri - The Uri to check.
-     * @return - Whether the Uri authority is DownloadsProvider.
-     */
-    private static boolean isDownloadsDocument(Uri uri) {
-        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
-    }
-
-    /**
-     * @param uri - The Uri to check.
-     * @return - Whether the Uri authority is MediaProvider.
-     */
-    private static boolean isMediaDocument(Uri uri) {
-        return "com.android.providers.media.documents".equals(uri.getAuthority());
-    }
-
-    /**
-     * @param uri - The Uri to check.
-     * @return - Whether the Uri authority is Google Photos.
-     */
-    private static boolean isGooglePhotosUri(Uri uri) {
-        return "com.google.android.apps.photos.content".equals(uri.getAuthority());
-    }
-
-
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is Google Drive.
-     */
-    private static boolean isGoogleDriveUri(Uri uri) {
-        return "com.google.android.apps.docs.storage".equals(uri.getAuthority()) //
-                || "com.google.android.apps.docs.storage.legacy".equals(uri.getAuthority());
-    }
-    private static String getDataColumn(Context context, Uri uri,
-                                        String selection, String[] selectionArgs) {
-        Cursor cursor = null;
-        final String column = "_data";
-        final String[] projection = {column};
-
-        try {
-            cursor = context.getContentResolver().query(uri, projection,
-                    selection, selectionArgs, null);
-
-            if (cursor != null && cursor.moveToFirst()) {
-                final int index = cursor.getColumnIndexOrThrow(column);
-                return cursor.getString(index);
-            }
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-        return null;
+    public static void shareFile(Context mContext,String outputfile){
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, FileUtils.getFileName(outputfile));
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        Uri fileUri;
+            fileUri = FileProvider.getUriForFile(
+                    mContext
+                    ,BuildConfig.APPLICATION_ID + ".provider"
+                    ,new File(outputfile));
+        intent.putExtra(Intent.EXTRA_STREAM,fileUri);
+        intent.setType("application/pdf");
+        mContext.startActivity(Intent.createChooser(intent,"Share file"));
     }
 }

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical"
+    tools:context=".activity.PreviewActivity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="0,2"
+        android:layout_gravity="bottom"
+        android:background="@color/purple_500">
+        <TableRow>
+            <Button
+                android:id="@+id/edit_btn"
+                style="?android:attr/buttonBarButtonStyle"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:drawableLeft="@drawable/ic_edit_black_24dp"
+                android:layout_weight="0.5"
+                android:text="@string/title_edit" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="64dp"
+                android:background="@color/colorPrimary"
+                />
+            <Button
+                android:id="@+id/save_btn"
+                style="?android:attr/buttonBarButtonStyle"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_weight="0.5"
+                android:drawableLeft="@drawable/ic_bx_download"
+                android:text="@string/title_save" />
+        </TableRow>
+    </TableLayout>
+
+
+
+</LinearLayout>

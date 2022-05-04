@@ -6,8 +6,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
-        tools:ignore="scopedStorage"/>
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="scopedStorage" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature
@@ -23,6 +24,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ToPDF">
         <activity
+            android:name=".activity.SaveActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.PreviewActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
@@ -31,27 +38,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.SettingsActivity"
-            android:exported="false"
-            android:label="@string/title_activity_settings" />
+        <activity android:name="com.github.pdfviewer.PDFViewActivity" />
         <activity
             android:name=".activity.ConvertToPDFActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activity.AboutUs"
             android:exported="false" />
+
         <meta-data
             android:name="pdftron_license_key"
-            android:value="${pdftronLicenseKey}"/>
+            android:value="${pdftronLicenseKey}" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
+            android:authorities="com.giang.topdf.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
     </application>
 

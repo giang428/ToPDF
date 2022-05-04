@@ -1,8 +1,10 @@
 package com.giang.topdf.activity;
-import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.giang.topdf.BuildConfig;
 import com.giang.topdf.R;

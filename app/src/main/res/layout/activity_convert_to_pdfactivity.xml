@@ -1,65 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/convert"
-    tools:context=".activity.ConvertToPDFActivity">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="-28dp">
 
-
-    <TextView
-        android:id="@+id/title_convert"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/convert"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:text="Convert document file to PDF"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.288" />
+        tools:context=".activity.ConvertToPDFActivity"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-28dp">
 
-    <Button
-        android:id="@+id/convert_and_save_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Convert and save"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/filechooserFragment"
-        android:name="com.giang.topdf.fragment.FileChooserFragment"
-        android:layout_width="389dp"
-        android:layout_height="45dp"
-        app:layout_constraintBottom_toTopOf="@+id/convert_and_save_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_convert"
-        app:layout_constraintVertical_bias="0.328"
-        tools:layout="@layout/fragment_file_chooser" />
+        <Button
+            android:id="@+id/view_file_button"
+            android:layout_width="103dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="48dp"
+            android:drawableLeft="@drawable/ic_pdf_view"
+            android:text="@string/action_view"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView"
+            app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        <TextView
+            android:id="@+id/title_convert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="@string/convert_document_to_pdf_string"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        android:foregroundGravity="center_horizontal"
-        android:gravity="center_horizontal"
-        android:text="Support Microsoft Office file format (.doc, .docx, .xls, .xlsx, .ppt, .pptx)"
-        app:layout_constraintBottom_toTopOf="@+id/filechooserFragment"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_convert"
-        app:layout_constraintVertical_bias="0.0" />
+        <Button
+            android:id="@+id/convert_and_save_button"
+            android:layout_width="136dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="16dp"
+            android:drawableLeft="@drawable/ic_pdf_convert_light"
+            android:text="@string/convert_and_save"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView"
+            app:layout_constraintVertical_bias="0.0" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/share_file_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:drawableLeft="@drawable/ic_pdf_share"
+            android:text="@string/action_share"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/convert_and_save_button"
+            app:layout_constraintStart_toEndOf="@+id/view_file_button"
+            app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/filechooserFragment"
+            android:name="com.giang.topdf.fragment.FileChooserFragment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            tools:layout="@layout/fragment_file_chooser" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:foregroundGravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="@string/support_string"
+            app:layout_constraintBottom_toTopOf="@+id/filechooserFragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_convert"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentContainerView"
+            android:name="com.giang.topdf.fragment.ConvertOptionsFragment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/filechooserFragment"
+            tools:layout="@layout/fragment_convert_opions" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

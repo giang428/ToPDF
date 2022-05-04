@@ -16,15 +16,53 @@
         <item>English</item>
         <item>Tiếng Việt</item>
     </string-array>
-        <string name="permission_denied_text">Permission Denied</string>
-        <string name="storage_need_rationale_description" translatable="false">Storage permission is needed for proper functioning of app.</string>
-        <string name="storage_need_rationale_for_not_ask_again_flag" translatable="false">You have chosen to never ask the permission again, but storage permission is needed for proper functioning of app.</string>
-        <string name="enable_from_settings_text" translatable="false">Enable from settings</string>
-        <string name="cancel_text">Cancel</string>
-        <string name="ask_again_text">Ask Again</string>
-        <string name="one_more_thing_text">One more thing!</string>
-        <string name="storage_manager_permission_rationale">In Android 11, you need to allow a special storage permission</string>
-        <string name="close_app_text">Close App</string>
-        <string name="allow_text">Allow</string>
+    <string name="permission_denied_text">Permission Denied</string>
+    <string name="storage_need_rationale_description" translatable="false">Storage permission is needed for proper functioning of app.</string>
+    <string name="storage_need_rationale_for_not_ask_again_flag" translatable="false">You have chosen to never ask the permission again, but storage permission is needed for proper functioning of app.</string>
+    <string name="enable_from_settings_text" translatable="false">Enable from settings</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="ask_again_text">Ask Again</string>
+    <string name="one_more_thing_text">One more thing!</string>
+    <string name="storage_manager_permission_rationale">In Android 11, you need to allow a special storage permission</string>
+    <string name="close_app_text">Close App</string>
+    <string name="allow_text">Allow</string>
     <string name="title_activity_settings">Setting</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="support_string">Support Microsoft Office file format (.doc, .docx, .xls, .xlsx, .ppt, .pptx)</string>
+    <string name="convert_document_to_pdf_string">Convert document file to PDF</string>
+    <string name="convert_and_save">Convert</string>
+    <string name="no_file_chosen_warning">No File chosen!</string>
+    <string name="add_file_successfully">Successfully added </string>
+    <string name="error_string">An error has occurred!</string>
+    <string name="choose_a_file">Choose a file</string>
+    <string name="nav_edit_string">Edit</string>
+    <string name="nav_view_string">View</string>
+    <string name="nav_save_string">Save</string>
+    <string name="title_activity_image_to_pdfactivity" translatable="false">ImageToPDFActivity</string>
+    <string name="title_edit">Edit</string>
+    <string name="title_view">View</string>
+    <string name="title_save">Save</string>
+    <string name="file_already_exist">File already exist</string>
+    <string name="m1">The file </string>
+    <string name="m2">in</string>
+    <string name="m3">is already exist. Choose an action</string>
+    <string name="action_rename">Rename</string>
+    <string name="action_overwrite">Overwrite</string>
+    <string name="action_close">Close</string>
+    <string name="convert_success_msg">Convert successfully!</string>
+    <string name="action_view">View</string>
+    <string name="action_share">Share</string>
+    <string name="preview_images">Preview Images</string>
+    <string name="quality">Quality</string>
+    <string name="original">Original</string>
+    <string name="high">High</string>
+    <string name="medium">Medium</string>
+    <string name="low">Low</string>
+    <string name="file_name">File name</string>
+    <string name="enter_file_name_here">Enter file name here</string>
+    <string name="path_to_save_the_file">Path to save the file</string>
+    <string name="path">Path</string>
+    <string name="select_a_file_to_start_converting">Select a file to start converting</string>
+    <string name="browse_file">Browse</string>
+    <string name="unsupport_type">"Unsupported file type! "</string>
 </resources>

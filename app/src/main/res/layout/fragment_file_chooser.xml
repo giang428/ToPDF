@@ -11,12 +11,12 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:ems="10"
-        android:hint="Select a file to start converting"
+        android:hint="@string/select_a_file_to_start_converting"
         android:inputType="textUri" />
 
     <Button
         android:id="@+id/browse_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Browse" />
+        android:text="@string/browse_file" />
 </LinearLayout>
