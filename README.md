@@ -2,7 +2,7 @@
 
 [![CodeFactor](https://www.codefactor.io/repository/github/giang428/topdf/badge)](https://www.codefactor.io/repository/github/giang428/topdf)
 
-<img src="https://user-images.githubusercontent.com/61865336/166659247-1c55f222-1182-4587-9059-77208a84f2ea.png" width="100px" height="100px">
+<img src="https://user-images.githubusercontent.com/61865336/166659247-1c55f222-1182-4587-9059-77208a84f2ea.png" width="200px" height="200px">
 
 ToPDF is an Android application to create pdf files from image
 ## Features
