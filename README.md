@@ -1,4 +1,6 @@
-<img src="https://user-images.githubusercontent.com/61865336/166659247-1c55f222-1182-4587-9059-77208a84f2ea.png" width="200px" height="200px">
+<p align="center">
+<img src="https://user-images.githubusercontent.com/61865336/167301954-fdfa2475-8645-47a2-bc85-34ee8c6865eb.png" width="200px" height="200px">
+</p>
 
 # ToPDF
 
