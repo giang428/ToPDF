@@ -6,7 +6,6 @@
 
 [![Android CI](https://github.com/giang428/ToPDF/workflows/Android%20CI/badge.svg?branch=master)](https://github.com/giang428/ToPDF/actions?query=workflow%3A"Android+CI")
 [![CodeFactor](https://www.codefactor.io/repository/github/giang428/topdf/badge)](https://www.codefactor.io/repository/github/giang428/topdf)
-[![CodeQL](https://github.com/giang428/ToPDF/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/giang428/ToPDF/actions/workflows/codeql-analysis.yml)
 
 ToPDF is an Android application to create pdf files from image
 ## Features
