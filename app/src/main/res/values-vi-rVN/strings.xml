@@ -50,6 +50,7 @@
     <string name="path">Đường dẫn</string>
     <string name="select_a_file_to_start_converting">Chọn một tệp để bắt đầu chuyển đổi</string>
     <string name="browse_file">Duyệt</string>
-    <string name="unsupport_type">"Định dạng tệp không được hỗ trợ! "</string>
+    <string name="unsupport_type">"Định dạng tệp không được hỗ trợ: "</string>
+    <string name="paper_size">Kích thước khổ giấy</string>
 
 </resources>
