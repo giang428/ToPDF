@@ -17,9 +17,9 @@ import com.giang.topdf.R;
 import java.util.ArrayList;
 
 public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.PreviewViewHolder> {
-    private Context mContext;
-    private ArrayList<Uri> mPreviewImages;
-    private LayoutInflater mLayoutInflater;
+    private final Context mContext;
+    private final ArrayList<Uri> mPreviewImages;
+    private final LayoutInflater mLayoutInflater;
 
     public PreviewAdapter(Context context, ArrayList<Uri> previewItems) {
         this.mContext = context;

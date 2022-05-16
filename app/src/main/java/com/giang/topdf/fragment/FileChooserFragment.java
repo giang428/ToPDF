@@ -8,39 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
 import com.giang.topdf.R;
-import com.giang.topdf.utils.FileUtils;
 
 import java.util.ArrayList;
 
 import lib.folderpicker.FolderPicker;
 
 public class FileChooserFragment extends Fragment {
-    private final String[] mimeType = new String[]{
-            "application/msword",
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            "application/vnd.ms-excel",
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            "application/vnd.ms-powerpoint",
-            "application/vnd.openxmlformats-officedocument.presentationml.presentation"
 
-    };
-    private final ArrayList<String> fileType = new ArrayList<String>() {
-        {
-            add(".doc");
-            add(".docx");
-            add(".xls");
-            add(".xlsx");
-            add(".ppt");
-            add(".pptx");
-        }
-    };
     Button mBrowseButton;
     EditText meditText_path;
     ActivityResultLauncher<Intent> mPickFile = registerForActivityResult(
@@ -48,14 +28,17 @@ public class FileChooserFragment extends Fragment {
                 if (result.getResultCode() == Activity.RESULT_OK) {
                     String fileLocation;
                     if (result.getData() != null) {
-                        fileLocation = result.getData().getStringExtra("data");
+                        Bundle file = new Bundle();
+                        file.putString("filepath",result.getData().getStringExtra("data"));
+                        file.putBoolean("isFilePicked",true);
+                        /*fileLocation = result.getData().getStringExtra("data");
                         String type = FileUtils.getFileExtension(fileLocation);
                         if (fileType.contains(type)) {
                             meditText_path.setText(fileLocation);
                             Toast.makeText(getContext(), getString(R.string.add_file_successfully) + " " + FileUtils.getFileName(fileLocation), Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(this.getContext(), getString(R.string.unsupport_type) + type, Toast.LENGTH_SHORT).show();
-                        }
+                        }*/
                     }
                 }
             });
@@ -73,8 +56,13 @@ public class FileChooserFragment extends Fragment {
         mBrowseButton.setOnClickListener(view -> {
             Intent intent = new Intent(this.getContext(), FolderPicker.class);
             intent.putExtra("pickFiles", true);
+            intent.putExtra("title","Select a document file to convert");
             mPickFile.launch(intent);
         });
         return root;
+    }
+
+    public interface onDataPass{
+        void onDataPass(String filePath);
     }
 }

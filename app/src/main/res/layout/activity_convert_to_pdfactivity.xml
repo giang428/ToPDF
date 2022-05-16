@@ -12,23 +12,7 @@
         android:id="@+id/convert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".activity.ConvertToPDFActivity"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-28dp">
-
-
-        <Button
-            android:id="@+id/view_file_button"
-            android:layout_width="103dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="48dp"
-            android:drawableLeft="@drawable/ic_pdf_view"
-            android:text="@string/action_view"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView"
-            app:layout_constraintVertical_bias="0.0" />
+        tools:context=".activity.ConvertToPDFActivity">
 
         <TextView
             android:id="@+id/title_convert"
@@ -42,76 +26,125 @@
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/convert_and_save_button"
-            android:layout_width="136dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:layout_marginEnd="16dp"
-            android:drawableLeft="@drawable/ic_pdf_convert_light"
-            android:text="@string/convert_and_save"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <Button
-            android:id="@+id/share_file_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:drawableLeft="@drawable/ic_pdf_share"
-            android:text="@string/action_share"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/convert_and_save_button"
-            app:layout_constraintStart_toEndOf="@+id/view_file_button"
-            app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/filechooserFragment"
-            android:name="com.giang.topdf.fragment.FileChooserFragment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            tools:layout="@layout/fragment_file_chooser" />
-
         <TextView
             android:id="@+id/textView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:foregroundGravity="center_horizontal"
             android:gravity="center_horizontal"
             android:text="@string/support_string"
-            app:layout_constraintBottom_toTopOf="@+id/filechooserFragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title_convert"
             app:layout_constraintVertical_bias="0.0" />
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentContainerView"
-            android:name="com.giang.topdf.fragment.ConvertOptionsFragment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="match_parent"
+            android:layout_height="71dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="64dp"
+            android:drawableTop="@drawable/ic_pdf_convert_light"
+            android:text="@string/create"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/fileChooser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/filechooserFragment"
-            tools:layout="@layout/fragment_convert_opions" />
+            app:layout_constraintTop_toBottomOf="@+id/textView">
+
+            <EditText
+                android:id="@+id/file_path"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/select_a_file_to_start_converting"
+                android:inputType="textUri"
+                android:minHeight="48dp"
+                android:textColorHint="#78909C" />
+
+            <Button
+                android:id="@+id/browse_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:text="@string/browse_file" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/file_chosen_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="@string/no_file_chosen_warning"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.466"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fileChooser" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/file_chosen_status">
+
+            <ImageView
+                android:id="@+id/file_icon"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/msword_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/file_chosen_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="File icon image" />
+
+            <TextView
+                android:id="@+id/file_chosen_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="4dp"
+                android:text="Size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/file_icon" />
+
+            <TextView
+                android:id="@+id/file_chosen_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:textSize="18sp"
+                android:textColor="#020202"
+                android:textStyle="bold"
+                android:text="File Name"
+                app:layout_constraintStart_toEndOf="@+id/file_icon"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
