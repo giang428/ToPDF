@@ -1,12 +1,22 @@
-# ToPDF
-<img src="https://user-images.githubusercontent.com/61865336/166659247-1c55f222-1182-4587-9059-77208a84f2ea.png" width="100px" height="100px">
+<p align="center">
+<img src="https://user-images.githubusercontent.com/61865336/167301954-fdfa2475-8645-47a2-bc85-34ee8c6865eb.png" width="200px" height="200px">
+</p>
 
+# ToPDF
+
+[![Android CI](https://github.com/giang428/ToPDF/workflows/Android%20CI/badge.svg?branch=master)](https://github.com/giang428/ToPDF/actions?query=workflow%3A"Android+CI")
+[![CodeFactor](https://www.codefactor.io/repository/github/giang428/topdf/badge)](https://www.codefactor.io/repository/github/giang428/topdf)
+
+ToPDF is an Android application to create pdf files from image
 ## Features
 Create PDF from images.
 
 You can pick images from gallery, or you can take photos directly from your device's camera.
 
 Can also convert Microsoft Documents (Word, Excel, PowerPoint) to PDF.
+
+## Screenshots
+
 
 ## Contributing
 Feel free to contribute. Your contribution can help me a lot.
