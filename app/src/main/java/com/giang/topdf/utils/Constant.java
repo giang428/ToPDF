@@ -1,5 +1,7 @@
 package com.giang.topdf.utils;
 
+import android.os.Environment;
+
 import java.util.ArrayList;
 
 public class Constant {
@@ -22,4 +24,9 @@ public class Constant {
             add(".pptx");
         }
     };
+    public static final String IMAGE_LIST_URI = "uriList";
+    public static final String ACTIVITY_CREATE = "activity_create";
+    public static final String ACTIVITY_CONVERT = "activity_convert";
+    public static final String DOCUMENTS_FOLDER = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getPath();
+    public static final int RESULT_EDIT = 100;
 }

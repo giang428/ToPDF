@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.giang.topdf.R;
 
 import java.util.ArrayList;
@@ -40,11 +41,14 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.PreviewV
                 .inflate(R.layout.image_view_layout, parent, false);
         return new PreviewAdapter.PreviewViewHolder(v);
     }
+
     @Override
     public void onBindViewHolder(@NonNull PreviewAdapter.PreviewViewHolder holder, int position) {
         Uri path = mPreviewImages.get(position);
         Glide.with(mContext)
                 .load(path)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .fitCenter()
                 .into(holder.imageView);
         holder.pageNumber.setText(String.valueOf(position + 1));
     }
@@ -52,6 +56,11 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.PreviewV
     @Override
     public int getItemCount() {
         return mPreviewImages.size();
+    }
+
+    public void setData(ArrayList<Uri> images) {
+        mPreviewImages.clear();
+        mPreviewImages.addAll(images);
     }
 
     public class PreviewViewHolder extends RecyclerView.ViewHolder {

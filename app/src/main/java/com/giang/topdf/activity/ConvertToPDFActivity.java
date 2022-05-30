@@ -1,9 +1,12 @@
 package com.giang.topdf.activity;
 
 import static com.giang.topdf.R.id.convert;
+import static com.giang.topdf.utils.Constant.ACTIVITY_CONVERT;
+import static com.giang.topdf.utils.Constant.MS_FILE_TYPE;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -37,25 +40,43 @@ public class ConvertToPDFActivity extends AppCompatActivity {
     EditText mFilePath;
     TextView mStatus, mFileName, mFileSize;
     ImageView mIcon;
+    boolean misFilePicked;
     ActivityResultLauncher<Intent> mPickFile = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> {
                 if (result.getResultCode() == Activity.RESULT_OK) {
                     String fileLocation;
                     if (result.getData() != null) {
-
+                        misFilePicked = true;
                         fileLocation = result.getData().getStringExtra("data");
                         String mFileType = FileUtils.getFileExtension(fileLocation);
-
                         if (Constant.MS_FILE_TYPE.contains(mFileType)) {
+
                             mFilePath.setText(fileLocation);
+                            File file = new File(fileLocation);
+                            long file_size = Integer.parseInt(String.valueOf(file.length()));
+                            mStatus.setText("1 file have been successfully added");
+                            mStatus.setTextColor(Color.rgb(0, 255, 0));
+                            if (mFileType.equals(MS_FILE_TYPE.get(1)) || mFileType.equals(MS_FILE_TYPE.get(2)))
+                                mIcon.setImageResource(R.drawable.msword_icon);
+                            else if (mFileType.equals(MS_FILE_TYPE.get(3)) || mFileType.equals(MS_FILE_TYPE.get(4)))
+                                mIcon.setImageResource(R.drawable.msexcel_icon);
+                            else
+                                mIcon.setImageResource(R.drawable.mspowerpoint_icon);
+
+                            mFileName.setText(FileUtils.getFileName(fileLocation));
+                            mFileSize.setText(FileUtils.getFileSize(file_size));
+
+                            mConvertButton.setEnabled(true);
+
                             Toast.makeText(this,
-                                    getString(R.string.add_file_successfully) + " " + FileUtils.getFileName(fileLocation),
-                                    Toast.LENGTH_SHORT)
+                                            getString(R.string.add_file_successfully) + " " + FileUtils.getFileName(fileLocation),
+                                            Toast.LENGTH_SHORT)
                                     .show();
                         } else {
+                            misFilePicked = false;
                             Toast.makeText(this,
-                                    getString(R.string.unsupport_type) + mFileType,
-                                    Toast.LENGTH_LONG)
+                                            getString(R.string.unsupport_type) + mFileType,
+                                            Toast.LENGTH_LONG)
                                     .show();
                         }
                     }
@@ -68,6 +89,7 @@ public class ConvertToPDFActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_convert_to_pdfactivity);
         mView = findViewById(convert);
+        misFilePicked = false;
         mConvertButton = this.findViewById(R.id.save_button);
         mBrowserButton = this.findViewById(R.id.browse_button);
         mStatus = this.findViewById(R.id.file_chosen_status);
@@ -76,6 +98,14 @@ public class ConvertToPDFActivity extends AppCompatActivity {
         mFilePath = this.findViewById(R.id.file_path);
         mIcon = this.findViewById(R.id.file_icon);
 
+        if (!misFilePicked) {
+            mStatus.setText(R.string.no_file_chosen_warning);
+            mStatus.setTextColor(Color.rgb(255, 0, 0));
+            mIcon.setVisibility(View.GONE);
+            mFileName.setVisibility(View.GONE);
+            mFileSize.setVisibility(View.GONE);
+            mConvertButton.setEnabled(false);
+        }
         mBrowserButton.setOnClickListener(view -> {
             Intent intent = new Intent(this, FolderPicker.class);
             intent.putExtra("pickFiles", true);
@@ -85,9 +115,9 @@ public class ConvertToPDFActivity extends AppCompatActivity {
 
         mConvertButton.setOnClickListener(view -> {
             try {
-                Intent i = new Intent(this,SaveActivity.class);
-                i.putExtra("activity_convert",true);
-                i.putExtra("filePath",mFilePath.getText().toString());
+                Intent i = new Intent(this, SaveActivity.class);
+                i.putExtra(ACTIVITY_CONVERT, true);
+                i.putExtra("filePath", mFilePath.getText().toString());
                 startActivity(i);
             } catch (Exception e) {
                 Toast.makeText(this, "No file selected!", Toast.LENGTH_LONG).show();
@@ -114,5 +144,22 @@ public class ConvertToPDFActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (misFilePicked) {
+            mIcon.setVisibility(View.VISIBLE);
+            mFileName.setVisibility(View.VISIBLE);
+            mFileSize.setVisibility(View.VISIBLE);
+            mConvertButton.setEnabled(true);
+        } else if (!misFilePicked) {
+            mStatus.setText(R.string.no_file_chosen_warning);
+            mIcon.setVisibility(View.GONE);
+            mFileName.setVisibility(View.GONE);
+            mFileSize.setVisibility(View.GONE);
+            mConvertButton.setEnabled(false);
+        }
     }
 }

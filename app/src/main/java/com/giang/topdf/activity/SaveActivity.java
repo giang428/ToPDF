@@ -1,21 +1,30 @@
 package com.giang.topdf.activity;
 
+import static com.giang.topdf.utils.Constant.ACTIVITY_CONVERT;
+import static com.giang.topdf.utils.Constant.ACTIVITY_CREATE;
+import static com.giang.topdf.utils.Constant.DOCUMENTS_FOLDER;
+import static com.giang.topdf.utils.Constant.IMAGE_LIST_URI;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.MotionEvent;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import com.giang.topdf.R;
 import com.giang.topdf.utils.FileUtils;
@@ -31,6 +40,7 @@ import com.pdftron.pdf.Convert;
 import com.pdftron.pdf.PDFDoc;
 import com.pdftron.sdf.SDFDoc;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -39,16 +49,20 @@ import lib.folderpicker.FolderPicker;
 
 public class SaveActivity extends AppCompatActivity {
     ArrayList<Uri> mImagesList;
-    Button mSaveButton;
-    String mSavefileName, mSavefilePath;
+    Button mSaveButton, mView, mShare;
+    String mSavefileName, mSavefilePath, mfinalPath;
     EditText mFileName, mFilePath;
-    boolean mIsCreatePDF;
+    RadioGroup mQualityPick;
+    boolean mIsCreatePDF, mIsCreated;
+    SharedPreferences sharedPreferences;
 
     @SuppressLint("ClickableViewAccessibility")
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         ActivityResultLauncher<Intent> mPickFile = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -61,29 +75,41 @@ public class SaveActivity extends AppCompatActivity {
                     }
                 });
 
-        mImagesList = getIntent().getParcelableArrayListExtra("uriList");
+        mIsCreated = false;
+        mImagesList = getIntent().getParcelableArrayListExtra(IMAGE_LIST_URI);
         mSaveButton = findViewById(R.id.save_button);
+        mView = findViewById(R.id.view_file_button);
+        mShare = findViewById(R.id.share_file_button);
+        if (!mIsCreated) {
+            mView.setEnabled(false);
+            mShare.setEnabled(false);
+        }
         //Create spinner
-        Spinner paperSize = (Spinner) findViewById(R.id.paperSize);
+        Spinner paperSize = findViewById(R.id.paperSize);
         ArrayAdapter<String> paperSizeAdapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
                 getResources().getStringArray(R.array.page_size_dropdown));
         paperSizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         paperSize.setAdapter(paperSizeAdapter);
-        paperSize.setSelection(6);
+        paperSize.setSelection(7);
 
+        mQualityPick = findViewById(R.id.quality_pick);
+        mQualityPick.check(R.id.radioButton_o);
         mFileName = this.findViewById(R.id.save_file_name_edit);
         mFilePath = this.findViewById(R.id.save_file_path_edit);
-        mFilePath.setText(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getPath());
+        //Set default folder for saving pdf file
+        mFilePath.setText(sharedPreferences.getString("defaultLocation", DOCUMENTS_FOLDER));
+        //get intent
         Intent t = getIntent();
-        if (t.hasExtra("activity_create")) {
+        if (t.hasExtra(ACTIVITY_CREATE)) {
             mFileName.setText(t.getExtras().getString("fileName"));
             mIsCreatePDF = true;
-        } else if (t.hasExtra("activity_convert")) {
+        } else if (t.hasExtra(ACTIVITY_CONVERT)) {
             String mFilePathReceivedFromIntent = t.getExtras().getString("filePath");
             mFileName.setText(FileUtils.getFileNameWithoutExtension(mFilePathReceivedFromIntent));
         }
+        //Choosing another folder to save
         mFilePath.setOnTouchListener((v, event) -> {
             final int DRAWABLE_RIGHT = 2;
             if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -102,11 +128,36 @@ public class SaveActivity extends AppCompatActivity {
                     createPdf(mImagesList);
                 else {
                     String mFilePathReceivedFromIntent = t.getExtras().getString("filePath");
-                    String mFileOutputPath = mFilePath.getText().toString() + mFileName.getText().toString() + ".pdf";
-                    convertPdf(mFilePathReceivedFromIntent, mFileOutputPath);
+                    String mFileOutputPath = mFilePath.getText().toString() + "/" + mFileName.getText().toString() + ".pdf";
+                    if (FileUtils.fileExists(mFileOutputPath)) {
+
+                        MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(this);
+                        dialogBuilder.setTitle(R.string.file_already_exist)
+                                .setMessage(getString(R.string.m1) + FileUtils.getFileName(mFileOutputPath) + " " + getString(R.string.m3))
+                                .setPositiveButton(R.string.action_rename, (dialog, which) -> dialog.dismiss())
+                                .setNegativeButton(R.string.action_overwrite, (dialog, which) -> convertPdf(mFilePathReceivedFromIntent, mFileOutputPath))
+                                .show();
+
+                    } else convertPdf(mFilePathReceivedFromIntent, mFileOutputPath);
                 }
             } catch (Exception e) {
+                mIsCreated = false;
                 Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mView.setOnClickListener(v -> {
+            try {
+                FileUtils.viewFile(this, mfinalPath);
+            } catch (Exception e) {
+                Toast.makeText(this, "Error! " + e, Toast.LENGTH_SHORT).show();
+            }
+        });
+        mShare.setOnClickListener(v -> {
+            try {
+                FileUtils.shareFile(this, mfinalPath);
+            } catch (Exception e) {
+                Toast.makeText(this, "Error! " + e, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -117,11 +168,17 @@ public class SaveActivity extends AppCompatActivity {
             Convert.officeToPdf(pdfdoc, filePath, null);
             pdfdoc.save(outputPath, SDFDoc.SaveMode.INCREMENTAL, null);
             MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(this);
-            dialog.setMessage(R.string.convert_success_msg);
-            dialog.setPositiveButton(R.string.action_view, (successDialog, which) -> FileUtils.viewFile(this, outputPath));
-            dialog.setNegativeButton(R.string.action_close, (successDialog, which) -> successDialog.cancel());
-            dialog.setNeutralButton(R.string.action_share, (successDialog, which) -> FileUtils.shareFile(this, outputPath));
-            dialog.show();
+            dialog.setMessage(R.string.convert_success_msg)
+                    .setPositiveButton(R.string.action_view, (successDialog, which) -> FileUtils.viewFile(this, outputPath))
+                    .setNegativeButton(R.string.action_close, (successDialog, which) -> successDialog.cancel())
+                    .setNeutralButton(R.string.action_share, (successDialog, which) -> FileUtils.shareFile(this, outputPath))
+                    .show();
+            mIsCreated = true;
+            if (mIsCreated) {
+                mfinalPath = outputPath;
+                mView.setEnabled(true);
+                mShare.setEnabled(true);
+            }
         } catch (PDFNetException e) {
             Toast.makeText(this, "Error when converting file", Toast.LENGTH_SHORT).show();
         }
@@ -140,11 +197,14 @@ public class SaveActivity extends AppCompatActivity {
             PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream(pdfFile));
             document.open();
             for (int i = 0; i < mImagesList.size(); i++) {
-                Image image = Image.getInstance(FileUtils.getPath(this, mImagesList.get(i)));
+                Bitmap bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), mImagesList.get(i));
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.JPEG, getQuality(), bytes);
+                Image image = Image.getInstance(bytes.toByteArray());
                 image.setBorder(Rectangle.BOX);
                 float pageWidth = document.getPageSize().getWidth();
                 float pageHeight = document.getPageSize().getHeight();
-                image.scaleAbsolute(pageWidth, pageHeight);
+                image.scaleToFit(pageWidth, pageHeight);
                 image.setAbsolutePosition(
                         (documentRect.getWidth() - image.getScaledWidth()) / 2,
                         (documentRect.getHeight() - image.getScaledHeight()) / 2);
@@ -152,14 +212,49 @@ public class SaveActivity extends AppCompatActivity {
                 document.newPage();
             }
             document.close();
+
             MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(this);
-            dialog.setMessage(R.string.convert_success_msg);
-            dialog.setPositiveButton(R.string.action_view, (successDialog, which) -> FileUtils.viewFile(this, mSavefilePath + mSavefileName + ".pdf"));
-            dialog.setNegativeButton(R.string.action_close, (successDialog, which) -> successDialog.cancel());
-            dialog.setNeutralButton(R.string.action_share, (successDialog, which) -> FileUtils.shareFile(this, mSavefilePath + mSavefileName + ".pdf"));
-            dialog.show();
+            dialog.setMessage(R.string.convert_success_msg)
+                    .setPositiveButton(R.string.action_view,
+                            (successDialog, which)
+                                    -> FileUtils.viewFile(this, mSavefilePath + mSavefileName + ".pdf"))
+                    .setNegativeButton(R.string.action_close,
+                            (successDialog, which)
+                                    -> successDialog.cancel())
+                    .setNeutralButton(R.string.action_share,
+                            (successDialog, which)
+                                    -> FileUtils.shareFile(this, mSavefilePath + mSavefileName + ".pdf"))
+                    .show();
+            mIsCreated = true;
+            if (mIsCreated) {
+                mfinalPath = mSavefilePath + mSavefileName + ".pdf";
+                mView.setEnabled(true);
+                mShare.setEnabled(true);
+            }
         } catch (Exception e) {
             Toast.makeText(this, "Path: " + mSavefilePath + mSavefileName + ".pdf" + " Error! " + e, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private int getQuality() {
+        int quality;
+        switch (mQualityPick.getCheckedRadioButtonId()) {
+            case R.id.radioButton_o:
+                quality = 100;
+                break;
+            case R.id.radioButton_h:
+                quality = 75;
+                break;
+            case R.id.radioButton_m:
+                quality = 50;
+                break;
+            case R.id.radioButton_l:
+                quality = 25;
+                break;
+            default:
+                quality = 30;
+                break;
+        }
+        return quality;
     }
 }

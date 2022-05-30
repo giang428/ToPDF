@@ -16,6 +16,8 @@ import androidx.core.content.FileProvider;
 import com.giang.topdf.BuildConfig;
 
 import java.io.File;
+import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
 
 public class FileUtils {
     private final Activity mContext;
@@ -35,19 +37,19 @@ public class FileUtils {
         if (uri.getScheme().equals("file")) {
             return uri.getPath();
         }
-        if (DocumentsContract.isDocumentUri(context,uri)){
-            return getPathForDocumentUri(mContentResolver,uri);
+        if (DocumentsContract.isDocumentUri(context, uri)) {
+            return getPathForDocumentUri(mContentResolver, uri);
         }
         return null;
     }
 
     private static String getPathForDocumentUri(ContentResolver mContentResolver, Uri uri) {
         String mAuthority = uri.getAuthority();
-        switch (mAuthority){
+        switch (mAuthority) {
             case "com.android.providers.media.documents":
-                return getPathForMediaDoc(mContentResolver,uri);
+                return getPathForMediaDoc(mContentResolver, uri);
             case "com.android.providers.downloads.documents":
-                return getPathForDownloadsDoc(mContentResolver,uri);
+                return getPathForDownloadsDoc(mContentResolver, uri);
             case "com.android.externalstorage.documents":
                 return getPathForExternalStorageDoc(uri);
         }
@@ -69,8 +71,8 @@ public class FileUtils {
 
     private static String getPathForDownloadsDoc(ContentResolver mContentResolver, Uri uri) {
         String documentId = DocumentsContract.getDocumentId(uri);
-        Uri downloadUri = Uri.parse("content://com.android.providers.downloads.documents/" + documentId.replace(":","%3A"));
-       // Uri downloadUriAppendId = ContentUris.withAppendedId(downloadUri, Long.parseLong(documentId));
+        Uri downloadUri = Uri.parse("content://com.android.providers.downloads.documents/" + documentId.replace(":", "%3A"));
+        // Uri downloadUriAppendId = ContentUris.withAppendedId(downloadUri, Long.parseLong(documentId));
         return getRealPath(mContentResolver, downloadUri, null);
     }
 
@@ -145,6 +147,7 @@ public class FileUtils {
         int index = path.lastIndexOf("/");
         return index < path.length() ? path.substring(index + 1) : null;
     }
+
     public static String getFileNameWithoutExtension(String path) {
         if (path == null)
             return null;
@@ -153,6 +156,7 @@ public class FileUtils {
             return fileName.lastIndexOf('.') < fileName.length() ? fileName.substring(0, fileName.lastIndexOf('.')) : null;
         }
     }
+
     public static String getFileExtension(String path) {
         if (path == null)
             return null;
@@ -161,6 +165,7 @@ public class FileUtils {
             return fileName.lastIndexOf('.') < fileName.length() ? fileName.substring(fileName.lastIndexOf('.')) : null;
         }
     }
+
     public static String getFilePath(String path) {
         if (path == null)
             return null;
@@ -172,31 +177,45 @@ public class FileUtils {
         File file = new File(filePath);
         return file.exists();
     }
-    public static void viewFile(Context mContext,String outputfile){
+
+    public static String getFileSize(long bytes) {
+        if (-1000 < bytes && bytes < 1000) {
+            return bytes + " B";
+        }
+        CharacterIterator ci = new StringCharacterIterator("kMGTPE");
+        while (bytes <= -999_950 || bytes >= 999_950) {
+            bytes /= 1000;
+            ci.next();
+        }
+        return String.format("%.1f %cB", bytes / 1000.0, ci.current());
+    }
+
+    public static void viewFile(Context mContext, String outputfile) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
         intent.putExtra(Intent.EXTRA_TEXT, FileUtils.getFileName(outputfile));
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         Uri fileUri;
-            fileUri = FileProvider.getUriForFile(
-                    mContext
-                    ,BuildConfig.APPLICATION_ID + ".provider"
-                    ,new File(outputfile));
-        intent.setDataAndType(fileUri,"application/pdf");
-        mContext.startActivity(Intent.createChooser(intent,"Share file"));
+        fileUri = FileProvider.getUriForFile(
+                mContext
+                , BuildConfig.APPLICATION_ID + ".provider"
+                , new File(outputfile));
+        intent.setDataAndType(fileUri, "application/pdf");
+        mContext.startActivity(Intent.createChooser(intent, "Share file"));
     }
-    public static void shareFile(Context mContext,String outputfile){
+
+    public static void shareFile(Context mContext, String outputfile) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_TEXT, FileUtils.getFileName(outputfile));
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         Uri fileUri;
-            fileUri = FileProvider.getUriForFile(
-                    mContext
-                    ,BuildConfig.APPLICATION_ID + ".provider"
-                    ,new File(outputfile));
-        intent.putExtra(Intent.EXTRA_STREAM,fileUri);
+        fileUri = FileProvider.getUriForFile(
+                mContext
+                , BuildConfig.APPLICATION_ID + ".provider"
+                , new File(outputfile));
+        intent.putExtra(Intent.EXTRA_STREAM, fileUri);
         intent.setType("application/pdf");
-        mContext.startActivity(Intent.createChooser(intent,"Share file"));
+        mContext.startActivity(Intent.createChooser(intent, "Share file"));
     }
 }

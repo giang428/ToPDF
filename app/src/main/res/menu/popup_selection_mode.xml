@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/camera"
-        android:title="@string/camera"
-        android:icon="@android:drawable/ic_menu_camera"/>
+        android:icon="@android:drawable/ic_menu_camera"
+        android:title="@string/camera" />
     <item
         android:id="@+id/file"
-        android:title="@string/file"
-        android:icon="@android:drawable/ic_menu_gallery"/>
+        android:icon="@android:drawable/ic_menu_gallery"
+        android:title="@string/file" />
 </menu>

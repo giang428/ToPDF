@@ -10,24 +10,9 @@
     <string name="about">About</string>
     //setting
     <string name="setting">Setting</string>
+    <string name="setting_language">Language</string>
 
-    <string name="setting_language">Languages</string>
-    <string-array name="setting_language_arr">
-        <item>English</item>
-        <item>Tiếng Việt</item>
-    </string-array>
-    <string-array name="page_size_dropdown">
-        <item>AUTO SIZE</item>
-        <item>LETTER (8.5 x 14 inches)</item>
-        <item>A0 (841 x 1189 mm)</item>
-        <item>A1 (594 x 841 mm)</item>
-        <item>A2 (420 x 594 mm)</item>
-        <item>A3 (297 x 420 mm)</item>
-        <item>A4 (210 x 297 mm)</item>
-        <item>A5 (148 x 210 mm)</item>
-        <item>A6 (105 x 148 mm)</item>
-        <item>CUSTOM SIZE</item>
-    </string-array>
+
     <string name="permission_denied_text">Permission Denied</string>
     <string name="storage_need_rationale_description" translatable="false">Storage permission is needed for proper functioning of app.</string>
     <string name="storage_need_rationale_for_not_ask_again_flag" translatable="false">You have chosen to never ask the permission again, but storage permission is needed for proper functioning of app.</string>
@@ -63,7 +48,7 @@
     <string name="convert_success_msg">Convert successfully!</string>
     <string name="action_view">View</string>
     <string name="action_share">Share</string>
-    <string name="preview_images">Preview Images</string>
+    <string name="preview_images">Preview PDF</string>
     <string name="quality">Quality</string>
     <string name="original">Original</string>
     <string name="high">High</string>
@@ -77,4 +62,35 @@
     <string name="browse_file">Browse</string>
     <string name="unsupport_type">"Unsupported file type: "</string>
     <string name="paper_size">Paper Size</string>
+    <string name="defaultSaveLocation">Default save location</string>
+    <string name="number_of_image_added">" images added"</string>
+    <string name="aboutme_version">"Version: "</string>
+    <string name="aboutme_author">Author: Nguyen Dinh Truong Giang</string>
+    <string name="aboutme_description">ToPDF is a simple app to create PDF files</string>
+    <string name="aboutme_email" translatable="false">giangcua3d@gmail.com</string>
+    <string name="aboutme_gmailcontact">Contact me via Gmail</string>
+    <string name="aboutme_fbId" translatable="false">giangtruong01</string>
+    <string name="aboutme_contactfb">Contact me via Facebook</string>
+    <string name="aboutme_githubId" translatable="false">giang428</string>
+    <string name="aboutme_github">Github page</string>
+    <string name="aboutme_a">About me</string>
+    <string name="confirm_back_title">Are you sure?</string>
+    <string name="confirm_back_msg">Discard all the change?</string>
+    <string name="no_str">No</string>
+    <string name="yes_str">Yes</string>
+    <string name="options">Options</string>
+    <string name="back">Back</string>
+    <string name="confrim">Confrim</string>
+    <string name="item_add">Add</string>
+    <string name="item_crop">Crop</string>
+    <string name="item_filter">Filter</string>
+    <string name="item_rearrange">Rearrange</string>
+    <string name="item_remove">Remove</string>
+    <string name="delete_error_msg">Cannot delete! The pdf file must contain at least 1 image</string>
+    <string name="item_draw">Draw</string>
+    <string name="item_add_text">Add text</string>
+    <string name="item_watermark">Add watermark</string>
+    <string name="title_activity_crop">Crop</string>
+    <string name="pick_images">Pick images</string>
+    <string name="item_rotate">Rotate</string>
 </resources>

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/dark_gray"
     android:orientation="vertical"
     tools:context=".activity.PreviewActivity">
 
@@ -11,41 +11,43 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
-    <TableLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:stretchColumns="0,2"
+        android:layout_height="56dp"
         android:layout_gravity="bottom"
-        android:background="@color/purple_500">
-        <TableRow>
-            <Button
-                android:id="@+id/edit_btn"
-                style="?android:attr/buttonBarButtonStyle"
-                android:textColor="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="64dp"
-                android:drawableLeft="@drawable/ic_edit_black_24dp"
-                android:layout_weight="0.5"
-                android:text="@string/title_edit" />
-            <View
-                android:layout_width="1dp"
-                android:layout_height="64dp"
-                android:background="@color/colorPrimary"
-                />
-            <Button
-                android:id="@+id/save_btn"
-                style="?android:attr/buttonBarButtonStyle"
-                android:textColor="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="64dp"
-                android:layout_weight="0.5"
-                android:drawableLeft="@drawable/ic_bx_download"
-                android:text="@string/title_save" />
-        </TableRow>
-    </TableLayout>
+        android:background="@color/purple_500"
+        android:orientation="horizontal"
+        android:stretchColumns="0,2">
 
+        <Button
+            android:id="@+id/edit_btn"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/ic_edit_black_24dp"
+            android:text="@string/title_edit"
+            android:textColor="@color/white" />
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/black" />
+
+        <Button
+            android:id="@+id/save_btn"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/ic_bx_download"
+            android:text="@string/title_save"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
 
 
 </LinearLayout>

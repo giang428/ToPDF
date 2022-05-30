@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.SaveActivity">
 
     <TextView
@@ -12,9 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:text="@string/file_name"
         android:textColor="@android:color/black"
         android:textSize="16sp"
-        android:text="@string/file_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,13 +26,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="64dp"
+        android:autofillHints="text"
         android:hint="@string/enter_file_name_here"
+        android:inputType="text"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/save_file_name_txt"
-        android:autofillHints="text"
-        android:inputType="text" />
+        app:layout_constraintTop_toBottomOf="@+id/save_file_name_txt" />
 
     <EditText
         android:id="@+id/save_file_path_edit"
@@ -40,14 +41,14 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:autofillHints="text"
         android:drawableEnd="@drawable/folder"
         android:hint="@string/path_to_save_the_file"
-        android:minHeight="48dp"
         android:inputType="textUri"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/save_file_path_txt"
-        android:autofillHints="text" />
+        app:layout_constraintTop_toBottomOf="@+id/save_file_path_txt" />
 
     <TextView
         android:id="@+id/save_file_path_txt"
@@ -55,9 +56,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:text="@string/path"
         android:textColor="@android:color/black"
         android:textSize="16sp"
-        android:text="@string/path"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/save_file_name_edit" />
 
@@ -67,9 +68,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:text="@string/quality"
         android:textColor="@android:color/black"
         android:textSize="16sp"
-        android:text="@string/quality"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/save_file_path_edit" />
 
@@ -115,7 +116,6 @@
     </RadioGroup>
 
 
-
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
@@ -132,10 +132,10 @@
 
     <Button
         android:id="@+id/view_file_button"
-        android:layout_width="145dp"
+        android:layout_width="140dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
-        android:drawableStart="@drawable/ic_pdf_view"
+        android:drawableLeft="@drawable/ic_pdf_view"
         android:paddingHorizontal="10dp"
         android:text="@string/action_view"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -144,10 +144,10 @@
 
     <Button
         android:id="@+id/share_file_button"
-        android:layout_width="145dp"
+        android:layout_width="140dp"
         android:layout_height="50dp"
         android:layout_marginEnd="16dp"
-        android:drawableStart="@drawable/ic_pdf_share"
+        android:drawableLeft="@drawable/ic_pdf_share"
         android:text="@string/action_share"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

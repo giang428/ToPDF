@@ -1,5 +1,30 @@
-<PreferenceScreen>
-
-
-
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory app:title="@string/setting" />
+    <ListPreference
+        app:defaultValue="en"
+        app:entries="@array/setting_language_entries"
+        app:entryValues="@array/setting_language_value"
+        app:icon="@drawable/ic_language"
+        app:key="language"
+        app:title="@string/setting_language"
+        app:useSimpleSummaryProvider="true" />
+    <Preference
+        app:defaultValue="none"
+        app:icon="@drawable/folder"
+        app:key="defaultLocation"
+        app:title="@string/defaultSaveLocation"
+        app:useSimpleSummaryProvider="true" />
+    <PreferenceCategory app:title="Paper Setting" />
+    <ListPreference
+        app:defaultValue="A4"
+        app:entries="@array/page_size_dropdown"
+        app:entryValues="@array/page_size_dropdown_val"
+        app:key="pageSize"
+        app:title="@string/paper_size"
+        app:useSimpleSummaryProvider="true" />
+    <PreferenceCategory app:title="Display" />
+    <SwitchPreference
+        app:defaultValue="true"
+        app:key="showPageNum"
+        app:title="Show page number" />
 </PreferenceScreen>

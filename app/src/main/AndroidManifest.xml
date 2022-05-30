@@ -24,10 +24,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ToPDF">
         <activity
-            android:name=".activity.SaveActivity"
+            android:name=".activity.EditActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.SettingsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_settings" />
+        <activity
+            android:name=".activity.SaveActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.PreviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.CropActivity"
             android:exported="false" />
         <activity
             android:name=".activity.MainActivity"

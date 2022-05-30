@@ -30,10 +30,6 @@ public class PermissionsUtils {
             Manifest.permission.READ_EXTERNAL_STORAGE
     };
 
-    private static class SingletonHolder {
-        static final PermissionsUtils INSTANCE = new PermissionsUtils();
-    }
-
     public static PermissionsUtils getInstance() {
         return PermissionsUtils.SingletonHolder.INSTANCE;
     }
@@ -74,7 +70,7 @@ public class PermissionsUtils {
             ActivityCompat.requestPermissions((AppCompatActivity) context,
                     permissions, requestCode);
         } else if (context instanceof Fragment) {
-                ((Fragment) context).requestPermissions(permissions,requestCode);
+            ((Fragment) context).requestPermissions(permissions, requestCode);
         }
     }
 
@@ -82,7 +78,7 @@ public class PermissionsUtils {
      * retrieves context of passed in non-null object, context can be of type
      * AppCompatActivity or Fragment
      *
-     * @param context     can be of type AppCompatActivity or Fragment
+     * @param context can be of type AppCompatActivity or Fragment
      */
     private Context retrieveContext(@NonNull Object context) {
         if (context instanceof AppCompatActivity) {
@@ -95,10 +91,11 @@ public class PermissionsUtils {
     /**
      * Handle a RequestPermissionResult by checking if the first permission is granted
      * and executing a Runnable when permission is granted
-     * @param grantResults the GrantResults Array
+     *
+     * @param grantResults    the GrantResults Array
      * @param requestCode
      * @param expectedRequest
-     * @param whenSuccessful the Runnable to call when permission is granted
+     * @param whenSuccessful  the Runnable to call when permission is granted
      */
     public void handleRequestPermissionsResult(Activity context, @NonNull int[] grantResults,
                                                int requestCode, int expectedRequest, @NonNull Runnable whenSuccessful) {
@@ -144,5 +141,9 @@ public class PermissionsUtils {
                     })
                     .setNegativeButton(R.string.cancel_text, (dialog, which) -> dialog.dismiss()).show();
         }
+    }
+
+    private static class SingletonHolder {
+        static final PermissionsUtils INSTANCE = new PermissionsUtils();
     }
 }

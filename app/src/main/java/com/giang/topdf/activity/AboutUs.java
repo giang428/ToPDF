@@ -18,18 +18,19 @@ public class AboutUs extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         View about = new AboutPage(this)
-                .addItem(new Element().setTitle("Version: " + BuildConfig.VERSION_NAME).setGravity(Gravity.CENTER_HORIZONTAL))
-                .addItem(new Element().setTitle("Author: Nguyen Dinh Truong Giang").setGravity(Gravity.CENTER_HORIZONTAL))          .setImage(R.mipmap.ic_launcher_round)
-                .setDescription("ToPDF is a simple app to create PDF files")
-                .addEmail("giangcua3d@gmail.com","Contact me via Gmail")
-                .addFacebook("giangtruong01","Contact me via Facebook")
-                .addGitHub("giang428","Github page")
+                .addItem(new Element().setTitle(getString(R.string.aboutme_version) + BuildConfig.VERSION_NAME).setGravity(Gravity.CENTER_HORIZONTAL))
+                .addItem(new Element().setTitle(getString(R.string.aboutme_author)).setGravity(Gravity.CENTER_HORIZONTAL)).setImage(R.mipmap.ic_launcher_round)
+                .setDescription(getString(R.string.aboutme_description))
+                .addEmail(getString(R.string.aboutme_email), getString(R.string.aboutme_gmailcontact))
+                .addFacebook(getString(R.string.aboutme_fbId), getString(R.string.aboutme_contactfb))
+                .addGitHub(getString(R.string.aboutme_githubId), getString(R.string.aboutme_github))
                 .create();
-        setTitle("About me");
+        setTitle(getString(R.string.aboutme_a));
         setContentView(about);
     }
+
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         super.finish();
     }
 }

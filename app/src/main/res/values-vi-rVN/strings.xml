@@ -38,7 +38,7 @@
     <string name="convert_success_msg">Chuyển đổi thành công!</string>
     <string name="action_view">Xem</string>
     <string name="action_share">Chia sẻ</string>
-    <string name="preview_images">Xem thử</string>
+    <string name="preview_images">Xem trước</string>
     <string name="quality">Chất lượng</string>
     <string name="original">Gốc</string>
     <string name="high">Cao</string>
@@ -52,5 +52,33 @@
     <string name="browse_file">Duyệt</string>
     <string name="unsupport_type">"Định dạng tệp không được hỗ trợ: "</string>
     <string name="paper_size">Kích thước khổ giấy</string>
+    <string name="defaultSaveLocation">Vị trí lưu mặc định</string>
+    <string name="number_of_image_added">" ảnh đã được thêm"</string>
+    <string name="aboutme_version">"Phiên bản: "</string>
+    <string name="aboutme_author">Người tạo: Nguyễn Đình Trường Giang</string>
+    <string name="aboutme_description">ToPDF là một ứng dụng đơn giản để tạo file PDF</string>
+    <string name="aboutme_gmailcontact">Liên hệ với tôi qua Gmail</string>
+    <string name="aboutme_contactfb">Liên hệ với tôi qua Facebook</string>
+    <string name="aboutme_a">Giới thiệu</string>
+    <string name="aboutme_github">Trang Github</string>
+    <string name="confirm_back_title">Bạn chắc chứ?</string>
+    <string name="confirm_back_msg">Huỷ bỏ tất cả các thay đổi và quay lại?</string>
+    <string name="no_str">Không</string>
+    <string name="yes_str">Có</string>
+    <string name="options">Tuỳ chọn</string>
+    <string name="back">Quay lại</string>
+    <string name="confrim">Xác nhận</string>
+    <string name="item_add">Thêm</string>
+    <string name="item_crop">Cắt</string>
+    <string name="item_filter">Bộ lọc</string>
+    <string name="item_rearrange">Sắp xếp</string>
+    <string name="item_remove">Xoá</string>
+    <string name="delete_error_msg">Không thể xoá ảnh! Tệp pdf phải chứa ít nhất 1 ảnh</string>
+    <string name="item_draw">Vẽ</string>
+    <string name="item_add_text">Thêm chữ</string>
+    <string name="item_watermark">Đóng dấu</string>
+    <string name="title_activity_crop">Cắt ảnh</string>
+    <string name="pick_images">Chọn ảnh</string>
+    <string name="item_rotate">Xoay ảnh</string>
 
 </resources>
