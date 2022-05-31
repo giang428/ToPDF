@@ -18,7 +18,7 @@ public class Constant {
             "application/vnd.openxmlformats-officedocument.presentationml.presentation"
 
     };
-    public static final ArrayList<String> MS_FILE_TYPE = new ArrayList<>() {
+    public static final ArrayList<String> MS_FILE_TYPE = new ArrayList<String>() {
         {
             add(".doc");
             add(".docx");
@@ -33,7 +33,7 @@ public class Constant {
     public static final String ACTIVITY_CONVERT = "activity_convert";
     public static final String DOCUMENTS_FOLDER = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getPath();
     public static final int RESULT_EDIT = 100;
-    public static final HashMap<Rectangle, Integer> PAGE_SIZE = new HashMap<>() {{
+    public static final HashMap<Rectangle, Integer> PAGE_SIZE = new HashMap<Rectangle, Integer>() {{
         put(PageSize.LETTER, 1);
         put(PageSize.LEGAL, 2);
         put(PageSize.A0, 3);
