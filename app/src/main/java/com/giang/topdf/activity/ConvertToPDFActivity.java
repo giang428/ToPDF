@@ -24,12 +24,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.giang.topdf.R;
 import com.giang.topdf.utils.Constant;
 import com.giang.topdf.utils.FileUtils;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.pdftron.common.PDFNetException;
-import com.pdftron.pdf.Convert;
-import com.pdftron.pdf.PDFDoc;
-import com.pdftron.sdf.SDFDoc;
-
 import java.io.File;
 
 import lib.folderpicker.FolderPicker;
@@ -54,7 +48,7 @@ public class ConvertToPDFActivity extends AppCompatActivity {
                             mFilePath.setText(fileLocation);
                             File file = new File(fileLocation);
                             long file_size = Integer.parseInt(String.valueOf(file.length()));
-                            mStatus.setText("1 file have been successfully added");
+                            mStatus.setText(R.string.convert_file_added);
                             mStatus.setTextColor(Color.rgb(0, 255, 0));
                             if (mFileType.equals(MS_FILE_TYPE.get(1)) || mFileType.equals(MS_FILE_TYPE.get(2)))
                                 mIcon.setImageResource(R.drawable.msword_icon);
@@ -125,22 +119,6 @@ public class ConvertToPDFActivity extends AppCompatActivity {
         });
     }
 
-    private void convertFile(String filePath, String outputPath) {
-        try {
-            PDFDoc pdfdoc = new PDFDoc();
-            Convert.officeToPdf(pdfdoc, filePath, null);
-            pdfdoc.save(outputPath, SDFDoc.SaveMode.INCREMENTAL, null);
-            MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(this);
-            dialog.setMessage(R.string.convert_success_msg);
-            dialog.setPositiveButton(R.string.action_view, (successDialog, which) -> FileUtils.viewFile(this, outputPath));
-            dialog.setNegativeButton(R.string.action_close, (successDialog, which) -> successDialog.cancel());
-            dialog.setNeutralButton(R.string.action_share, (successDialog, which) -> FileUtils.shareFile(this, outputPath));
-            dialog.show();
-        } catch (PDFNetException e) {
-            Toast.makeText(this, "Error when converting file", Toast.LENGTH_SHORT).show();
-        }
-    }
-
     @Override
     public void onBackPressed() {
         super.finish();
@@ -154,12 +132,6 @@ public class ConvertToPDFActivity extends AppCompatActivity {
             mFileName.setVisibility(View.VISIBLE);
             mFileSize.setVisibility(View.VISIBLE);
             mConvertButton.setEnabled(true);
-        } else if (!misFilePicked) {
-            mStatus.setText(R.string.no_file_chosen_warning);
-            mIcon.setVisibility(View.GONE);
-            mFileName.setVisibility(View.GONE);
-            mFileSize.setVisibility(View.GONE);
-            mConvertButton.setEnabled(false);
         }
     }
 }

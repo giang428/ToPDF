@@ -81,5 +81,6 @@
     <string name="pick_images">Chọn ảnh</string>
     <string name="item_rotate">Xoay ảnh</string>
     <string name="crop_image">Cắt</string>
+    <string name="convert_file_added">1 tệp đã được thêm thành công</string>
 
 </resources>

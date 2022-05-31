@@ -94,4 +94,5 @@
     <string name="pick_images">Pick images</string>
     <string name="item_rotate">Rotate</string>
     <string name="crop_image">Crop Image</string>
+    <string name="convert_file_added">1 file have been successfully added</string>
 </resources>
