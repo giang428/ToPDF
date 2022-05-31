@@ -4,6 +4,7 @@ import static com.giang.topdf.utils.Constant.ACTIVITY_CONVERT;
 import static com.giang.topdf.utils.Constant.ACTIVITY_CREATE;
 import static com.giang.topdf.utils.Constant.DOCUMENTS_FOLDER;
 import static com.giang.topdf.utils.Constant.IMAGE_LIST_URI;
+import static com.giang.topdf.utils.Constant.PAGE_SIZE;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -14,11 +15,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -44,6 +47,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Objects;
 
 import lib.folderpicker.FolderPicker;
 
@@ -52,7 +57,10 @@ public class SaveActivity extends AppCompatActivity {
     Button mSaveButton, mView, mShare;
     String mSavefileName, mSavefilePath, mfinalPath;
     EditText mFileName, mFilePath;
+    TextView mtxt1,mtxt2;
     RadioGroup mQualityPick;
+    Spinner paperSize;
+    int paperSizeSelected;
     boolean mIsCreatePDF, mIsCreated;
     SharedPreferences sharedPreferences;
 
@@ -85,19 +93,24 @@ public class SaveActivity extends AppCompatActivity {
             mShare.setEnabled(false);
         }
         //Create spinner
-        Spinner paperSize = findViewById(R.id.paperSize);
+        paperSize = findViewById(R.id.paperSize);
         ArrayAdapter<String> paperSizeAdapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
                 getResources().getStringArray(R.array.page_size_dropdown));
         paperSizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         paperSize.setAdapter(paperSizeAdapter);
-        paperSize.setSelection(7);
+        paperSizeSelected = PAGE_SIZE.get(PageSize.A4);
+        paperSize.setSelection(paperSizeSelected);
 
         mQualityPick = findViewById(R.id.quality_pick);
         mQualityPick.check(R.id.radioButton_o);
+
         mFileName = this.findViewById(R.id.save_file_name_edit);
         mFilePath = this.findViewById(R.id.save_file_path_edit);
+
+        mtxt1 = findViewById(R.id.quality_txt);
+        mtxt2 = findViewById(R.id.page_size_txt);
         //Set default folder for saving pdf file
         mFilePath.setText(sharedPreferences.getString("defaultLocation", DOCUMENTS_FOLDER));
         //get intent
@@ -108,6 +121,10 @@ public class SaveActivity extends AppCompatActivity {
         } else if (t.hasExtra(ACTIVITY_CONVERT)) {
             String mFilePathReceivedFromIntent = t.getExtras().getString("filePath");
             mFileName.setText(FileUtils.getFileNameWithoutExtension(mFilePathReceivedFromIntent));
+            mQualityPick.setVisibility(View.GONE);
+            paperSize.setVisibility(View.GONE);
+            mtxt1.setVisibility(View.GONE);
+            mtxt2.setVisibility(View.GONE);
         }
         //Choosing another folder to save
         mFilePath.setOnTouchListener((v, event) -> {
@@ -187,7 +204,7 @@ public class SaveActivity extends AppCompatActivity {
     private void createPdf(ArrayList<Uri> mImagesList) {
         mSavefileName = mFileName.getText().toString();
         mSavefilePath = mFilePath.getText().toString() + "/";
-        Rectangle pageSize = new Rectangle(PageSize.A4);
+        Rectangle pageSize = new Rectangle(getPageSize(paperSize.getSelectedItemPosition()));
         pageSize.setBackgroundColor(BaseColor.WHITE);
         Document document = new Document(pageSize,
                 0, 0, 0, 0);
@@ -236,6 +253,14 @@ public class SaveActivity extends AppCompatActivity {
         }
     }
 
+    private Rectangle getPageSize(int paperSizeSelected) {
+        for(Map.Entry<Rectangle,Integer> entry : PAGE_SIZE.entrySet()){
+            if(Objects.equals(paperSizeSelected,entry.getValue())) return entry.getKey();
+        }
+        return PageSize.A4;
+    }
+
+    @SuppressLint("NonConstantResourceId")
     private int getQuality() {
         int quality;
         switch (mQualityPick.getCheckedRadioButtonId()) {

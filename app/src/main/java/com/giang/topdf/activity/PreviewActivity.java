@@ -31,8 +31,6 @@ public class PreviewActivity extends AppCompatActivity {
     private ArrayList<Uri> mListImages;
     private PreviewAdapter mPreviewAdapter;
     private RecyclerView recyclerView;
-    private SharedPreferences sharedPreferences;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
