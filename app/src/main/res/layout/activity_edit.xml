@@ -92,7 +92,7 @@
             android:background="@color/colorAccent"
             android:drawableLeft="@drawable/fp_ic_action_back"
             android:gravity="center"
-            android:text="@string/confrim"
+            android:text="@string/confirm"
             android:textColor="@color/white"
             tools:ignore="RtlHardcoded" />
 

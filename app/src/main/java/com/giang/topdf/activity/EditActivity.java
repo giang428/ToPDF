@@ -29,6 +29,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import gun0912.tedimagepicker.builder.TedImagePicker;
 import gun0912.tedimagepicker.builder.type.ButtonGravity;
@@ -57,6 +58,15 @@ public class EditActivity extends AppCompatActivity implements EditImageOptionLi
                 }
             }
     );
+    ActivityResultLauncher<Intent> rearrangeActivity =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result ->{
+                if(result.getData() != null && result.getResultCode() == 1337) {
+                    mReturnUri.clear();
+                    mReturnUri.addAll(result.getData().getParcelableArrayListExtra(IMAGE_LIST_URI));
+                    mEditAdapter.notifyDataSetChanged();
+                    mViewPager.setAdapter(mEditAdapter);
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,9 +124,9 @@ public class EditActivity extends AppCompatActivity implements EditImageOptionLi
         itemArrayList.add(new EditItem(R.drawable.ic_edit_add_image, getString(R.string.item_add)));
         itemArrayList.add(new EditItem(R.drawable.ic_edit_crop_image, getString(R.string.item_crop)));
         itemArrayList.add(new EditItem(R.drawable.ic_edit_rotate_image, getString(R.string.item_rotate)));
-        itemArrayList.add(new EditItem(R.drawable.ic_edit_filter_image, getString(R.string.item_filter)));
         itemArrayList.add(new EditItem(R.drawable.ic_edit_rearrange_image, getString(R.string.item_rearrange)));
         itemArrayList.add(new EditItem(R.drawable.ic_edit_remove_image, getString(R.string.item_remove)));
+        itemArrayList.add(new EditItem(R.drawable.ic_edit_filter_image, getString(R.string.item_filter)));
         itemArrayList.add(new EditItem(R.drawable.ic_edit_draw_image, getString(R.string.item_draw)));
         itemArrayList.add(new EditItem(R.drawable.ic_edit_add_text_image, getString(R.string.item_add_text)));
         itemArrayList.add(new EditItem(R.drawable.ic_edit_watermark_image, getString(R.string.item_watermark)));
@@ -142,16 +152,15 @@ public class EditActivity extends AppCompatActivity implements EditImageOptionLi
                 break;
             case 2:
                 rotateImage(mViewPager.getCurrentItem());
-
                 break;
             case 3:
-                applyFilter();
-                break;
-            case 4:
                 rearrangeImages();
                 break;
-            case 5:
+            case 4:
                 removeImage(mViewPager.getCurrentItem());
+                break;
+            case 5:
+                applyFilter();
                 break;
             default:
                 Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
@@ -169,13 +178,13 @@ public class EditActivity extends AppCompatActivity implements EditImageOptionLi
                     b.getHeight(), x, false);
             OutputStream os = getContentResolver().openOutputStream(mReturnUri.get(pos));
             z.compress(Bitmap.CompressFormat.PNG, 100, os);
+            mEditAdapter.notifyDataSetChanged();
+            mViewPager.setAdapter(mEditAdapter);
+            mViewPager.setCurrentItem(pos);
             Toast.makeText(this, "rotated", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             Toast.makeText(this, "error " + e, Toast.LENGTH_SHORT).show();
         }
-        mEditAdapter.notifyDataSetChanged();
-        mViewPager.setAdapter(mEditAdapter);
-        mViewPager.setCurrentItem(pos);
     }
 
     private void removeImage(int pos) {
@@ -190,6 +199,9 @@ public class EditActivity extends AppCompatActivity implements EditImageOptionLi
     }
 
     private void rearrangeImages() {
+        Intent i = new Intent(this, RearrangeImageActivity.class);
+        i.putExtra(IMAGE_LIST_URI,mReturnUri);
+        rearrangeActivity.launch(i);
     }
 
     private void applyFilter() {

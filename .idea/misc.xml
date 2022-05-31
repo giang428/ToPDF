@@ -12,6 +12,7 @@
         <entry key="..\:/AndroidStudioProject/topdf/app/src/main/res/drawable-anydpi/ic_pdf_convert.xml" value="0.2165" />
         <entry key="..\:/AndroidStudioProject/topdf/app/src/main/res/drawable-anydpi/ic_pdf_convert_light.xml" value="0.2165" />
         <entry key="..\:/AndroidStudioProject/topdf/app/src/main/res/drawable-anydpi/ic_pdf_share.xml" value="0.152" />
+        <entry key="..\:/AndroidStudioProject/topdf/app/src/main/res/drawable-hdpi/shape_round_stroke.xml" value="0.1515" />
         <entry key="..\:/AndroidStudioProject/topdf/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1945" />
         <entry key="..\:/AndroidStudioProject/topdf/app/src/main/res/drawable/background.xml" value="0.189" />
         <entry key="..\:/AndroidStudioProject/topdf/app/src/main/res/drawable/circle.xml" value="0.1935" />
@@ -34,6 +35,7 @@
         <entry key="..\:/AndroidStudioProject/topdf/app/src/main/res/layout/activity_image_to_pdfactivity2.xml" value="0.1718683197947841" />
         <entry key="..\:/AndroidStudioProject/topdf/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/AndroidStudioProject/topdf/app/src/main/res/layout/activity_preview.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioProject/topdf/app/src/main/res/layout/activity_rearrange_image.xml" value="0.1736111111111111" />
         <entry key="..\:/AndroidStudioProject/topdf/app/src/main/res/layout/activity_save.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProject/topdf/app/src/main/res/layout/activity_splash.xml" value="0.18342391304347827" />
         <entry key="..\:/AndroidStudioProject/topdf/app/src/main/res/layout/activity_viewpdf.xml" value="0.1743659420289855" />
@@ -48,6 +50,7 @@
         <entry key="..\:/AndroidStudioProject/topdf/app/src/main/res/layout/fragment_view.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProject/topdf/app/src/main/res/layout/image_view_layout.xml" value="0.1718683197947841" />
         <entry key="..\:/AndroidStudioProject/topdf/app/src/main/res/layout/item_icon.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioProject/topdf/app/src/main/res/layout/item_rearrange_layout.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProject/topdf/app/src/main/res/layout/settings_activity.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProject/topdf/app/src/main/res/layout/test.xml" value="0.1743659420289855" />
         <entry key="..\:/AndroidStudioProject/topdf/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1718683197947841" />
@@ -62,7 +65,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_16" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17_PREVIEW" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
