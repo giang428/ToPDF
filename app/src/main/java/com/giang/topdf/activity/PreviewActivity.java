@@ -4,7 +4,6 @@ import static com.giang.topdf.utils.Constant.ACTIVITY_CREATE;
 import static com.giang.topdf.utils.Constant.IMAGE_LIST_URI;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
@@ -31,6 +30,7 @@ public class PreviewActivity extends AppCompatActivity {
     private ArrayList<Uri> mListImages;
     private PreviewAdapter mPreviewAdapter;
     private RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

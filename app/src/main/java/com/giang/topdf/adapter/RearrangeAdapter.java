@@ -18,10 +18,10 @@ import com.giang.topdf.R;
 import java.util.ArrayList;
 
 public class RearrangeAdapter extends RecyclerView.Adapter<RearrangeAdapter.RearrangeViewHolder> {
+    private final RearrangeAdapter.onClickListener mOnClickListener;
     private ArrayList<Uri> mImageList;
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private final RearrangeAdapter.onClickListener mOnClickListener;
 
     public RearrangeAdapter(RearrangeAdapter.onClickListener onClickListener, ArrayList<Uri> mImageList, Context mContext) {
         this.mOnClickListener = onClickListener;
@@ -61,6 +61,17 @@ public class RearrangeAdapter extends RecyclerView.Adapter<RearrangeAdapter.Rear
         return mImageList.size();
     }
 
+    public void positionChanged(ArrayList<Uri> images) {
+        mImageList = images;
+        notifyDataSetChanged();
+    }
+
+    public interface onClickListener {
+        void onUpButtonClicked(int position);
+
+        void onDownButtonClicked(int position);
+    }
+
     public class RearrangeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView mImageView;
         TextView mNumber;
@@ -78,20 +89,11 @@ public class RearrangeAdapter extends RecyclerView.Adapter<RearrangeAdapter.Rear
 
         @Override
         public void onClick(View v) {
-            if(v.getId() == R.id.buttonUp){
+            if (v.getId() == R.id.buttonUp) {
                 mOnClickListener.onUpButtonClicked(getAbsoluteAdapterPosition());
-            }
-            else if (v.getId() == R.id.buttonDown){
+            } else if (v.getId() == R.id.buttonDown) {
                 mOnClickListener.onDownButtonClicked(getAbsoluteAdapterPosition());
             }
         }
-    }
-    public void positionChanged(ArrayList<Uri> images) {
-        mImageList = images;
-        notifyDataSetChanged();
-    }
-    public interface onClickListener {
-        void onUpButtonClicked(int position);
-        void onDownButtonClicked(int position);
     }
 }

@@ -29,7 +29,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import gun0912.tedimagepicker.builder.TedImagePicker;
 import gun0912.tedimagepicker.builder.type.ButtonGravity;
@@ -59,8 +58,8 @@ public class EditActivity extends AppCompatActivity implements EditImageOptionLi
             }
     );
     ActivityResultLauncher<Intent> rearrangeActivity =
-            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result ->{
-                if(result.getData() != null && result.getResultCode() == 1337) {
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getData() != null && result.getResultCode() == 1337) {
                     mReturnUri.clear();
                     mReturnUri.addAll(result.getData().getParcelableArrayListExtra(IMAGE_LIST_URI));
                     mEditAdapter.notifyDataSetChanged();
@@ -144,27 +143,13 @@ public class EditActivity extends AppCompatActivity implements EditImageOptionLi
     @Override
     public void onItemClick(int position) {
         switch (position) {
-            case 0:
-                addImages();
-                break;
-            case 1:
-                cropImage(mViewPager.getCurrentItem());
-                break;
-            case 2:
-                rotateImage(mViewPager.getCurrentItem());
-                break;
-            case 3:
-                rearrangeImages();
-                break;
-            case 4:
-                removeImage(mViewPager.getCurrentItem());
-                break;
-            case 5:
-                applyFilter();
-                break;
-            default:
-                Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
-                break;
+            case 0 -> addImages();
+            case 1 -> cropImage(mViewPager.getCurrentItem());
+            case 2 -> rotateImage(mViewPager.getCurrentItem());
+            case 3 -> rearrangeImages();
+            case 4 -> removeImage(mViewPager.getCurrentItem());
+            case 5 -> applyFilter();
+            default -> Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -200,7 +185,7 @@ public class EditActivity extends AppCompatActivity implements EditImageOptionLi
 
     private void rearrangeImages() {
         Intent i = new Intent(this, RearrangeImageActivity.class);
-        i.putExtra(IMAGE_LIST_URI,mReturnUri);
+        i.putExtra(IMAGE_LIST_URI, mReturnUri);
         rearrangeActivity.launch(i);
     }
 

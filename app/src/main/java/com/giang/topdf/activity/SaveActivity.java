@@ -57,7 +57,7 @@ public class SaveActivity extends AppCompatActivity {
     Button mSaveButton, mView, mShare;
     String mSavefileName, mSavefilePath, mfinalPath;
     EditText mFileName, mFilePath;
-    TextView mtxt1,mtxt2;
+    TextView mtxt1, mtxt2;
     RadioGroup mQualityPick;
     Spinner paperSize;
     int paperSizeSelected;
@@ -254,32 +254,20 @@ public class SaveActivity extends AppCompatActivity {
     }
 
     private Rectangle getPageSize(int paperSizeSelected) {
-        for(Map.Entry<Rectangle,Integer> entry : PAGE_SIZE.entrySet()){
-            if(Objects.equals(paperSizeSelected,entry.getValue())) return entry.getKey();
+        for (Map.Entry<Rectangle, Integer> entry : PAGE_SIZE.entrySet()) {
+            if (Objects.equals(paperSizeSelected, entry.getValue())) return entry.getKey();
         }
         return PageSize.A4;
     }
 
     @SuppressLint("NonConstantResourceId")
     private int getQuality() {
-        int quality;
-        switch (mQualityPick.getCheckedRadioButtonId()) {
-            case R.id.radioButton_o:
-                quality = 100;
-                break;
-            case R.id.radioButton_h:
-                quality = 75;
-                break;
-            case R.id.radioButton_m:
-                quality = 50;
-                break;
-            case R.id.radioButton_l:
-                quality = 25;
-                break;
-            default:
-                quality = 30;
-                break;
-        }
-        return quality;
+        return switch (mQualityPick.getCheckedRadioButtonId()) {
+            case R.id.radioButton_o -> 100;
+            case R.id.radioButton_h -> 75;
+            case R.id.radioButton_m -> 50;
+            case R.id.radioButton_l -> 25;
+            default -> 30;
+        };
     }
 }
