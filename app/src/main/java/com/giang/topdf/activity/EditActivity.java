@@ -69,13 +69,13 @@ public class EditActivity extends AppCompatActivity implements EditImageOptionLi
 
         //get arrayList Uri from preview activity
         mGetUri = getIntent().getParcelableArrayListExtra(IMAGE_LIST_URI);
-        mReturnUri = mGetUri;
+        mReturnUri = new ArrayList<>(mGetUri);
 
         mBack = findViewById(R.id.backbtn);
         mConfirm = findViewById(R.id.confirmbtn);
 
         //init viewpager
-        initViewPager(mGetUri);
+        initViewPager(mReturnUri);
         //init option menu
         showOptionMenu();
         //on Back pressed, dismiss all changes
