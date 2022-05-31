@@ -93,4 +93,5 @@
     <string name="title_activity_crop">Crop</string>
     <string name="pick_images">Pick images</string>
     <string name="item_rotate">Rotate</string>
+    <string name="crop_image">Crop Image</string>
 </resources>

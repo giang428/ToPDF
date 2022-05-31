@@ -80,5 +80,6 @@
     <string name="title_activity_crop">Cắt ảnh</string>
     <string name="pick_images">Chọn ảnh</string>
     <string name="item_rotate">Xoay ảnh</string>
+    <string name="crop_image">Cắt</string>
 
 </resources>
