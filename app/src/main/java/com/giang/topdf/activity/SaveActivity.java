@@ -262,12 +262,17 @@ public class SaveActivity extends AppCompatActivity {
 
     @SuppressLint("NonConstantResourceId")
     private int getQuality() {
-        return switch (mQualityPick.getCheckedRadioButtonId()) {
-            case R.id.radioButton_o -> 100;
-            case R.id.radioButton_h -> 75;
-            case R.id.radioButton_m -> 50;
-            case R.id.radioButton_l -> 25;
-            default -> 30;
-        };
+        switch (mQualityPick.getCheckedRadioButtonId()) {
+            case R.id.radioButton_o:
+                return 100;
+            case R.id.radioButton_h:
+                return 75;
+            case R.id.radioButton_m:
+                return 50;
+            case R.id.radioButton_l:
+                return 25;
+            default:
+                return 30;
+        }
     }
 }

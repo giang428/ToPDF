@@ -143,13 +143,27 @@ public class EditActivity extends AppCompatActivity implements EditImageOptionLi
     @Override
     public void onItemClick(int position) {
         switch (position) {
-            case 0 -> addImages();
-            case 1 -> cropImage(mViewPager.getCurrentItem());
-            case 2 -> rotateImage(mViewPager.getCurrentItem());
-            case 3 -> rearrangeImages();
-            case 4 -> removeImage(mViewPager.getCurrentItem());
-            case 5 -> applyFilter();
-            default -> Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
+            case 0:
+                addImages();
+                break;
+            case 1:
+                cropImage(mViewPager.getCurrentItem());
+                break;
+            case 2:
+                rotateImage(mViewPager.getCurrentItem());
+                break;
+            case 3:
+                rearrangeImages();
+                break;
+            case 4:
+                removeImage(mViewPager.getCurrentItem());
+                break;
+            case 5:
+                applyFilter();
+                break;
+            default:
+                Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 
