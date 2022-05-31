@@ -104,7 +104,6 @@ public class EditActivity extends AppCompatActivity implements EditImageOptionLi
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         RecyclerView mRecyclerView = this.findViewById(R.id.recyclerView1);
         mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setHasFixedSize(true);
         mEditImageOptionListAdapter = new EditImageOptionListAdapter(this, getOptions(),
                 getApplicationContext());
         mRecyclerView.setAdapter(mEditImageOptionListAdapter);
